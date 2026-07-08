@@ -20,7 +20,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:var(--paper);
+  background:#0E0D0B;
+  padding:clamp(8px,1.6vw,24px);
   color:var(--ink);
   font-family:'Archivo',sans-serif;
   font-variation-settings:'wdth' 100,'wght' 400;
@@ -37,10 +38,10 @@ body.ru .en{display:none !important}
 .mono{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,1.1vw,12px);letter-spacing:.04em;text-transform:uppercase}
 .display{
   font-family:'Archivo',sans-serif;
-  font-variation-settings:'wdth' 82,'wght' 900;
+  font-variation-settings:'wdth' 70,'wght' 900;
   font-weight:900;
   text-transform:uppercase;
-  line-height:.86;
+  line-height:.82;
   letter-spacing:-.015em;
 }
 .script{font-family:'Mr Dafoe',cursive;color:var(--red);text-transform:none;font-weight:400;letter-spacing:0}
@@ -52,14 +53,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 
 /* ---------- header ---------- */
 header{
-  position:fixed;top:0;left:0;right:0;z-index:50;
+  position:sticky;top:0;z-index:50;
   display:flex;align-items:center;justify-content:space-between;
   padding:14px var(--pad);
   background:color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--hair);
 }
-.logo{font-variation-settings:'wdth' 82,'wght' 900;font-weight:900;text-transform:uppercase;font-size:15px;letter-spacing:.01em}
+.logo{font-variation-settings:'wdth' 70,'wght' 900;font-weight:900;text-transform:uppercase;font-size:15px;letter-spacing:.01em}
 .logo sup{font-size:9px;vertical-align:super}
 nav{display:flex;gap:clamp(14px,3vw,36px);align-items:center}
 nav a{position:relative;padding:2px 4px}
@@ -80,32 +81,42 @@ nav a.circled::after{
 
 /* ---------- hero ---------- */
 .hero{
-  min-height:100svh;
-  display:flex;flex-direction:column;justify-content:space-between;
-  padding:calc(60px + var(--pad)) var(--pad) var(--pad);
   border-bottom:1px solid var(--hair);
   position:relative;
+  padding-bottom:0;
 }
-.hero-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.hero-title{position:relative;margin:clamp(24px,6vh,64px) 0}
-.hero-title .display{font-size:clamp(72px,19vw,290px)}
-.hero-title .script{
-  position:absolute;
-  font-size:clamp(40px,9.5vw,150px);
-  right:clamp(0px,4vw,60px);
-  bottom:clamp(-18px,-2vw,-30px);
-  transform:rotate(-6deg);
-  z-index:2;
-  pointer-events:none;
+.hero-stage{
+  position:relative;
+  padding:clamp(20px,4vw,48px) var(--pad) clamp(24px,4vw,52px);
+  min-height:min(78svh,760px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.hero-img{
+  position:absolute;left:50%;top:50%;
+  width:clamp(180px,30vw,380px);
+  transform:translate(-50%,-52%);
+  filter:grayscale(1) contrast(1.08);
+  z-index:1;
+}
+.hero-img img{display:block;width:100%;height:auto}
+.hero-title{position:relative;z-index:2}
+.hero-title .l1,.hero-title .l2{display:block}
+.hero-title .l1{font-size:clamp(84px,20vw,320px)}
+.hero-title .l2{font-size:clamp(64px,15.5vw,250px);margin-left:clamp(24px,18vw,320px);margin-top:-.06em}
+.hero .script-over{
+  font-size:clamp(52px,9vw,150px);
+  right:clamp(8px,6vw,90px);top:38%;
 }
 .hero-sub{
-  display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end;
+  position:relative;z-index:3;
+  display:grid;grid-template-columns:1fr minmax(240px,420px);gap:24px;align-items:end;
+  margin-top:clamp(20px,4vw,44px);
 }
-.hero-sub p{max-width:44ch;font-size:clamp(15px,1.6vw,19px);line-height:1.35}
-.hero-sub .mono{text-align:right;color:var(--grey)}
+.hero-sub p{font-size:clamp(14px,1.4vw,17px);line-height:1.4;max-width:44ch;justify-self:end;grid-column:2}
 @media(max-width:720px){
   .hero-sub{grid-template-columns:1fr}
-  .hero-sub .mono{text-align:left}
+  .hero-sub p{grid-column:1;justify-self:start}
+  .hero-title .l2{margin-left:12vw}
 }
 @media(prefers-reduced-motion:no-preference){
   .hero-title,.hero-sub{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
@@ -139,7 +150,7 @@ section{border-bottom:1px solid var(--hair)}
 }
 .service:last-child{border-right:none}
 .service .num{color:var(--red)}
-.service h3{font-variation-settings:'wdth' 82,'wght' 900;font-weight:900;text-transform:uppercase;font-size:clamp(20px,2.4vw,30px);line-height:.95}
+.service h3{font-variation-settings:'wdth' 70,'wght' 900;font-weight:900;text-transform:uppercase;font-size:clamp(20px,2.4vw,30px);line-height:.95}
 .service p{font-size:15px;line-height:1.45;max-width:36ch}
 .service .mono.tail{margin-top:auto;color:var(--grey)}
 @media(max-width:860px){
@@ -201,7 +212,7 @@ section{border-bottom:1px solid var(--hair)}
 .step{padding:clamp(20px,3vw,40px) var(--pad);border-right:1px solid var(--hair)}
 .step:last-child{border-right:none}
 .step .mono{color:var(--grey);font-size:10px}
-.step h4{font-variation-settings:'wdth' 82,'wght' 900;font-weight:900;text-transform:uppercase;font-size:clamp(16px,1.8vw,22px);margin:10px 0 8px}
+.step h4{font-variation-settings:'wdth' 70,'wght' 900;font-weight:900;text-transform:uppercase;font-size:clamp(16px,1.8vw,22px);margin:10px 0 8px}
 .step p{font-size:14px;line-height:1.45;color:#3a3934}
 @media(max-width:860px){
   .process{grid-template-columns:repeat(2,1fr)}
@@ -241,7 +252,7 @@ form{
 form button{
   grid-column:1/-1;
   font-family:'Archivo',sans-serif;
-  font-variation-settings:'wdth' 82,'wght' 900;font-weight:900;
+  font-variation-settings:'wdth' 70,'wght' 900;font-weight:900;
   text-transform:uppercase;font-size:clamp(18px,2.4vw,26px);
   background:var(--ink);color:var(--paper);
   border:none;padding:22px;cursor:pointer;letter-spacing:.02em;
@@ -281,6 +292,7 @@ footer a:hover{color:var(--red)}
 .thumb img{display:block;width:100%;height:auto}
 .thumb:hover{transform:rotate(0deg) scale(1.06);z-index:5}
 .thumb .mono{position:absolute;left:0;bottom:-20px;font-size:10px;color:var(--grey)}
+.collage-script{font-size:clamp(44px,8vw,130px);left:56%;top:44%;transform:rotate(-8deg) translate(-50%,-50%)}
 .collage-cta{display:flex;justify-content:center;padding:0 var(--pad) clamp(28px,4vw,56px)}
 .btn-cases{
   font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.04em;text-transform:uppercase;
@@ -339,6 +351,25 @@ footer a:hover{color:var(--red)}
 .service .s-thumb{width:min(64%,190px)}
 .service .s-thumb img{display:block;width:100%;height:auto}
 .service .num{color:var(--grey);font-size:10px}
+
+#main-site,#portfolio-page{background:var(--paper);position:relative}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.5;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.055 0 0 0 0 0.05 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.rail{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px var(--pad);
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+}
+.rail span{white-space:nowrap}
+.rail .dim{color:var(--grey)}
+.script-over{
+  position:absolute;font-family:'Mr Dafoe',cursive;color:var(--red);
+  transform:rotate(-7deg);pointer-events:none;user-select:none;z-index:4;
+  text-transform:none;letter-spacing:0;line-height:1;
+}
 </style>
 </head>
 <body>
@@ -362,25 +393,28 @@ footer a:hover{color:var(--red)}
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-meta mono">
-    <span>[ AI Production ]</span>
-    <span>( Fashion & Beauty )</span>
+  <div class="rail">
     <span>45°02′N / 38°58′E</span>
-    <span class="en">Est. 2026</span><span class="ru">Осн. 2026</span>
+    <span class="dim">(</span><span>KRD</span><span class="dim">)</span>
+    <span>AI Production</span>
+    <span class="dim">(</span><span>Fashion &amp; Beauty</span><span class="dim">)</span>
+    <span>45°02′N / 38°58′E</span>
   </div>
-  <div class="hero-title">
-    <h1 class="display">Axis</h1>
-    <span class="script" aria-hidden="true">Atelier</span>
-  </div>
-  <div class="hero-sub">
-    <p>
-      <span class="en">Editorial photo &amp; video for fashion brands. Produced with AI. Directed by taste.</span>
-      <span class="ru">Editorial-фото и видео для fashion-брендов. Произведено с помощью AI. Под управлением вкуса.</span>
-    </p>
-    <div class="mono">
-      <span class="en">No studios. No logistics.<br>Full campaign in days — not months.</span>
-      <span class="ru">Без студий. Без логистики.<br>Кампания за дни — не месяцы.</span>
+  <div class="hero-stage">
+    <div class="hero-img" aria-hidden="true"><img data-img="nd2" alt=""></div>
+    <h1 class="hero-title display"><span class="l1">Axis</span><span class="l2">Atelier</span></h1>
+    <span class="script-over" aria-hidden="true">editorial</span>
+    <div class="hero-sub">
+      <p>
+        <span class="en">Editorial photo &amp; video for fashion brands. Produced with AI. Directed by taste.</span>
+        <span class="ru">Editorial-фото и видео для fashion-брендов. Произведено с помощью AI. Под управлением вкуса.</span>
+      </p>
     </div>
+  </div>
+  <div class="rail">
+    <span>Vol. 01</span>
+    <span class="dim">( 01 )</span>
+    <span class="en">Est. 2026</span><span class="ru">Осн. 2026</span>
   </div>
 </section>
 
@@ -437,6 +471,7 @@ footer a:hover{color:var(--red)}
   </div>
   <div class="collage" id="collage">
     <span class="display collage-word" aria-hidden="true">Portfolio</span>
+    <span class="script-over collage-script" aria-hidden="true">cases</span>
     <!-- thumbs injected by JS -->
   </div>
   <div class="collage-cta">
@@ -501,10 +536,13 @@ footer a:hover{color:var(--red)}
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact">
+    <div style="position:relative;display:inline-block">
     <h2 class="display">
       <span class="en">Let's<span class="asterisk">*</span>make</span>
       <span class="ru">Давайте<span class="asterisk">*</span>сделаем</span>
     </h2>
+    <span class="script-over" style="font-size:clamp(36px,6vw,100px);right:-.4em;bottom:-.25em" aria-hidden="true">together</span>
+    </div>
     <!-- To activate the form: create a free form at formspree.io and paste your endpoint below -->
     <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <div class="field">
@@ -540,6 +578,13 @@ footer a:hover{color:var(--red)}
   </div>
 </section>
 
+<div class="rail" style="border-top:1px solid var(--hair)">
+  <span>45°02′N / 38°58′E</span>
+  <span class="dim">(</span><span>KRD</span><span class="dim">)</span>
+  <span>Axis Atelier</span>
+  <span class="dim">(</span><span>Vol. 01</span><span class="dim">)</span>
+  <span>45°02′N / 38°58′E</span>
+</div>
 <footer class="mono">
   <span>Axis Atelier© 2026</span>
   <a href="https://instagram.com/markmavmy" target="_blank" rel="noopener">Instagram — @markmavmy</a>
