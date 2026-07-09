@@ -287,6 +287,18 @@ footer a:hover{color:var(--ink)}
 
 #work .parens .pl{position:relative}
 #work .parens .pl .ast{position:absolute;right:100%;top:0;margin-right:.06em}
+
+/* --- AVM-style motion --- */
+@media (prefers-reduced-motion: no-preference){
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  .h-big.rv, .serif-big.rv{clip-path:inset(0 0 100% 0);transform:translateY(.35em);transition:clip-path .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),opacity .4s}
+  .h-big.rv.in, .serif-big.rv.in{clip-path:inset(0 0 -0.2em 0);transform:none;opacity:1}
+  .case-frames .f, .cases-grid figure, .cases-grid img{overflow:hidden}
+  .case-frames .f img, .cases-grid img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+  .case-frames .f:hover img, .cases-grid img:hover{transform:scale(1.05)}
+  .plx{will-change:transform}
+}
 </style>
 </head>
 <body>
@@ -567,6 +579,41 @@ const IMGS = {"nd1": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAk
   }
   window.addEventListener('hashchange', route);
   route();
+})();
+
+/* --- AVM-style motion --- */
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(es=>{
+    es.forEach((e,i)=>{ if(e.isIntersecting){
+      e.target.style.transitionDelay = (e.target.dataset.d||0)+'ms';
+      e.target.classList.add('in'); io.unobserve(e.target);
+    }});
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach((el,i)=>io.observe(el));
+
+  // light parallax on case & work images
+  const plx = [...document.querySelectorAll('.case-frames .f img, .cases-grid img, #work .work-photo img')];
+  plx.forEach(el=>el.classList.add('plx'));
+  let ticking=false;
+  function onScroll(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(()=>{
+      const vh = innerHeight;
+      plx.forEach(el=>{
+        const r = el.getBoundingClientRect();
+        if(r.bottom<0||r.top>vh) return;
+        const p = (r.top + r.height/2 - vh/2)/vh; // -0.5..0.5
+        el.style.transform = 'translateY(' + (p*-18).toFixed(1) + 'px)' + (el.matches(':hover')?' scale(1.05)':'');
+      });
+      ticking=false;
+    });
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 })();
 </script>
 </body>
